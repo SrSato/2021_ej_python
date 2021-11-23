@@ -1,13 +1,12 @@
 {
-  "usuarios":
-  [
-    {
-      "usuario":"Lolo",
-      "pass":"1234"
-    },
-    {
-      "usuario":"pepe",
-      "pass":"pepero"
-    }
-  ]
+    "usuarios": [
+        {
+            "usuario": "Lolo",
+            "pass": "1234"
+        },
+        {
+            "usuario": "Josefo",
+            "pass": "pepero"
+        }
+    ]
 }
