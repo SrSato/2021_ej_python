@@ -1,5 +1,6 @@
-#IMPORTAMOS (algunos más que otros)
+#IMPORTAMOS
 import utilidades
+import random
 
 #DEFINICION DE FUNCIONES
 def valida_op(num,lista):
@@ -9,16 +10,21 @@ def valida_op(num,lista):
 
 def salir():
     global continuar
-    print("Aqui ando")
+    print("Sesión cerrada. ¡Adios!")
     continuar=False
 
 def conf():
     global catalogo
-    print("Catálogo actual:",catalogo)
-    producto = input("Introduce el nombre del producto a añadir o modificar: ('salir' para volver al menu) ")
+    print("Catálogo actual:\n",catalogo)
+    producto = input("Introduce el nombre del producto a añadir o modificar ('salir' para volver al menu): ")
     if producto=="salir":
         return True
-    precio = utilidades.pideNumero("Introduce su precio: ")
+    if producto in catalogo:
+        cambiar=input("¿Quieres cambiarle el nombre? (s/n) :")
+        if cambiar=="s":
+            del catalogo[producto]
+            producto= input("Escribe su nuevo nombre: ")
+    precio = utilidades.pideNumero("Introduce su nuevo precio: ")
     catalogo[producto]=precio
     print("El catálogo queda asi:",catalogo,"\n")
     return True
@@ -77,7 +83,7 @@ def print_ticket(num):
             for linea in compra:
                 print(f"{linea[0]} ({linea[2]}) x {linea[1]} : {linea[3]}")
             print("==============================================")
-            print(f"Total: {registro[i][3]} Total con I.V.A: {registro[i][4]}")
+            print(f"Total: {registro[i][3]}\nTotal con I.V.A: {registro[i][4]}")
             print("\n¡Gracias por su compra!\n")
             return True
     print("El ticket no existe.")
@@ -133,7 +139,7 @@ def stats():
                     total_dia_acu+=total_dia
                     tickets_dia_acu+=tickets_dia
             if total_dia != 0:
-                media_dia=round(total_dia/tickets_dia,2)
+                media_dia=round((total_dia/tickets_dia),2)
             else:
                 media_dia=0
             media_dia_acu+=media_dia
@@ -169,6 +175,9 @@ def listar_prod():
     listado=list(catalogo.keys())
     return listado
 
+def muestra_prod():
+    print("Catálogo de productos:\n",catalogo,"\n")
+
 def freq_ventas():
     productos=listar_prod()
     freq=[]
@@ -185,14 +194,17 @@ def freq_ventas():
     freq.sort()
     return freq
 
-
 def top_ventas():
     freq=freq_ventas()
-    print(freq[-1])
+    print(f"El producto más vendido es {freq[-1][1]} con un total de {freq[-1][0]} impactos.\n")
 
+def chof_ventas():
+    freq=freq_ventas()
+    print(f"El producto menos vendido es {freq[0][1]} con un total de {freq[0][0]} impactos.\n")
 
-
-
+def print_freq():
+    freq=freq_ventas()
+    print("Frecuencia de ventas en formato [ventas,Prod]:\n",freq,"\n")
 
 
 
@@ -201,6 +213,10 @@ opciones=[
     {
         "nombre":"SALIR",
         "metodo":salir
+    },
+    {
+        "nombre":"Catálogo de productos",
+        "metodo": muestra_prod
     },
     {
         "nombre":"Configuración de productos y precios",
@@ -227,32 +243,39 @@ opciones=[
         "metodo":mejor_abs
     },
     {
-        "nombre":"Catálogo de productos",
-        "metodo": listar_prod
-    },
-    {
         "nombre":"Producto más vendido",
         "metodo":top_ventas
     },
     {
+        "nombre":"Producto menos vendido",
+        "metodo":chof_ventas
+    },
+    {
         "nombre":"Frecuencia de ventas del catálogo",
-        "metodo":freq_ventas
+        "metodo":print_freq
     }
-
 ]
 
+continuar=True
 menu="Gestor de Fruteria:\n============\n"
 menu_frase="¿Opción?: "
 aviso_opcion="Tu opción no está disponible. Escoge de nuevo.\n"
-continuar=True
 catalogo={"Pera":1.25 ,"Manzana":1.45,"Melocotón":1.90,"Naranja":0.60,"Mandarina":1.65,"Plátano": 1.25,"Tomate": 1.15,"Lechuga": 0.45}
 iva=1.21
 num_fac=0
+#[num_fac, semana, dia, total,total_iva,lista]
+#[producto,unidades,catalogo[producto],precio_linea]
 registro=[]
 explotacion=[]
 
 # MAIN o PRINCIPAL
+for i in range(1,53):
+    for j in range(1,8):
+        muestra,coste_m = random.choice(list(catalogo.items()))
+        registro.append([i*j,i,j,coste_m,round(coste_m*iva,2),[[muestra,1,coste_m,coste_m]]])
+
 for i in range(0,len(opciones)):
+
     menu=menu + str(i) + " - " + opciones[i]["nombre"]+"\n"
 
 while continuar:

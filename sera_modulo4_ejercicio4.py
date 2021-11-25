@@ -2,6 +2,9 @@ import random
 import utilidades
 
 def loteria(bolas):
+    if bolas==0:
+        return None
+        
     num=[]
     num.append(str(random.randint(1,9)))
     bolas=bolas-1
