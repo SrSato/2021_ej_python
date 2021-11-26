@@ -383,9 +383,13 @@ def top_ventas(continuar, catalogo, num_fac, registro):
 
         No modifica datos.
     '''
+
+    total_ventas = 0
     freq = freq_ventas(catalogo, registro)
+    for prod in freq:
+        total_ventas = total_ventas + prod[0]
     print(
-        f"El producto más vendido es {freq[-1][1]} con un total de {freq[-1][0]} impactos.\n")
+        f"El producto más vendido es {freq[-1][1]} con un total de {freq[-1][0]} ventas sobre {total_ventas}.\n")
     input(pausa)
     return [continuar, catalogo, num_fac, registro]
 
@@ -399,9 +403,12 @@ def chof_ventas(continuar, catalogo, num_fac, registro):
 
         No modifica datos.
     '''
+    total_ventas = 0
     freq = freq_ventas(catalogo, registro)
+    for prod in freq:
+        total_ventas = total_ventas + prod[0]
     print(
-        f"El producto menos vendido es {freq[0][1]} con un total de {freq[0][0]} impactos.\n")
+        f"El producto menos vendido es {freq[0][1]} con un total de {freq[0][0]} ventas sobre {total_ventas} .\n")
     input(pausa)
     return [continuar, catalogo, num_fac, registro]
 
@@ -415,8 +422,12 @@ def print_freq(continuar, catalogo, num_fac, registro):
 
         No modifica datos.
     '''
+    total_ventas = 0
     freq = freq_ventas(catalogo, registro)
-    print("Frecuencia de ventas en formato [ventas,Prod]:\n", freq, "\n")
+    for prod in freq:
+        total_ventas = total_ventas + prod[0]
+    print(" Total de ventas:", total_ventas, "\n",
+          "Frecuencia en formato [ventas,Prod]:\n", freq, "\n")
     input(pausa)
     return [continuar, catalogo, num_fac, registro]
 

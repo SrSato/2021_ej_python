@@ -99,14 +99,14 @@ registro = []
 
 # MAIN o PRINCIPAL
 
-# Metemos datos falsos para poder testear
+# 1.- Metemos datos falsos para poder testear
 siembra_tickets()
 
-# Montamos el menu
+# 2.- Montamos el menu
 menu = crea_menu(menu)
 
-# flujo principal: mientras queramos continuar, ejecutará una opción del programa
-# y asentará los cambios en los datos que produzca esa opcion
+# 3.- flujo principal: mientras queramos continuar, ejecutará la opción
+# que toque y asentará los cambios en los datos que produzca esa opcion
 while continuar:
     print(menu)
     opcion = int(utilidades.pideNumero(menu_frase))
