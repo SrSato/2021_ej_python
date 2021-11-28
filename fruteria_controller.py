@@ -21,7 +21,7 @@ def salir(continuar, catalogo, num_fac, registro):
         argumentos: (continuar, catalogo, num_fac, registro)
 
         INTERFAZ: cambia el valor del flag continuar a false para marcar que
-        se quiere salir del programa
+        se quiere salir del programa (Modifica continuar)
     '''
 
     print("Sesión cerrada. ¡Adios!")
@@ -35,7 +35,7 @@ def conf(continuar, catalogo, num_fac, registro):
         argumentos: (continuar, catalogo, num_fac, registro)
 
         INTERFAZ: Permite introducir, modificar o elminar productos y
-        precios. (Los datos guardados en catalogo)
+        precios. (Modifica catalogo)
     '''
 
     print("Catálogo actual:\n", catalogo)
@@ -143,11 +143,11 @@ def print_ticket(registro, num):
         if registro[i][0] == num:
             print(
                 f"\nTicket de Compra num. {registro[i][0]} Fecha: SEMANA {registro[i][1]} DIA {registro[i][2]}")
-            print("==============================================")
+            print("================================================")
             compra = registro[i][5]
             for linea in compra:
                 print(f"{linea[0]} ({linea[2]}) x {linea[1]} : {linea[3]}")
-            print("==============================================")
+            print("================================================")
             print(
                 f"Total: {registro[i][3]}\nTotal con I.V.A: {registro[i][4]}")
             print("\n¡Gracias por su compra!\n")
@@ -227,6 +227,9 @@ def stats(continuar, catalogo, num_fac, registro):
         tickets_acu += len(evaluable)
         total_acu += total
         media_acu += media
+        total=round(total,2)
+        total_acu=round(total_acu,2)
+        media_acu=round(media_acu,2)
         print(
             f"Semana {semana}: tickets={len(evaluable)} total= {total} media={media}")
         print(
@@ -248,6 +251,9 @@ def stats(continuar, catalogo, num_fac, registro):
             else:
                 media_dia = 0
             media_dia_acu += media_dia
+            media_dia_acu=round(media_dia_acu)
+            total_dia_acu=round(total_dia_acu)
+
             print(
                 f"\tDia {dia}: tickets={tickets_dia} total= {total_dia} media={media_dia}")
             print(

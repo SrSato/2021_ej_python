@@ -14,26 +14,6 @@ from fruteria_controller import *
 # Las de control de la fruteria estan en fruteria_controller
 
 
-def asienta_cambios(cambios):
-    '''
-        Return: none
-        argumentos: cambios
-            cambios es una lista de valores devuelta por
-            las funciones de fruteria_controller
-
-        Recoge los datos generados por fruteria_controller y los asienta en el
-        las variables del archivo principal (este archivo ;) )
-    '''
-    global continuar
-    continuar = cambios[0]
-    global catalogo
-    catalogo = cambios[1]
-    global num_fac
-    num_fac = cambios[2]
-    global registro
-    registro = cambios[3]
-
-
 def crea_menu(menu):
     '''
         return: str
@@ -66,6 +46,26 @@ def valida_op(num, lista):
     if num < len(lista) and num > -1:
         return True
     return False
+
+
+def asienta_cambios(cambios):
+    '''
+        Return: none
+        argumentos: cambios
+            cambios es una lista de valores devuelta por
+            las funciones de fruteria_controller
+
+        Recoge los datos generados por fruteria_controller y los asienta en el
+        las variables del archivo principal (este archivo ;) )
+    '''
+    global continuar
+    continuar = cambios[0]
+    global catalogo
+    catalogo = cambios[1]
+    global num_fac
+    num_fac = cambios[2]
+    global registro
+    registro = cambios[3]
 
 
 def siembra_tickets():
