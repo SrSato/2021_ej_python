@@ -1,5 +1,4 @@
 import utilidades
-from contacto import Contacto
 from agenda import Agenda
 
 
@@ -13,10 +12,8 @@ def crea_menu(menu):
 
         Monta el menu que enseñamos al usuario
     '''
-
     for i in range(0, len(opciones)):
         menu = menu + str(i) + " - " + opciones[i]["nombre"] + "\n"
-
     return menu
 
 
