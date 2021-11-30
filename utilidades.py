@@ -72,6 +72,30 @@ def pideFrase(peticion):
     return str(palabra)
 
 
+def leer(fichero):
+    '''Lee ficheros todos a piñon'''
+    chicha = ""
+    try:
+        f = open(fichero, encoding='utf8')
+        chicha = f.read()
+        f.close()
+    except:
+        print("No se ha podidio leer el fichero")
+    return chicha
+
+
+def escribir(fichero, metodo, chicha):
+    '''Escribe en utf8 en el fichero que le digamos'''
+    try:
+        f = open(fichero, metodo, encoding='utf8')
+        f.write(chicha)
+        f.close()
+        return True
+    except:
+        print("No se ha podidio abrir el fichero")
+        return False
+
+
 def readme():
     '''Doc de utilidades'''
     info = '''

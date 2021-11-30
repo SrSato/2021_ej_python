@@ -1,8 +1,8 @@
 def tonta():
-    x=7
+    x = 7
 
 
-cosa=tonta()
+cosa = tonta()
 
 if not cosa:
     print("Si")

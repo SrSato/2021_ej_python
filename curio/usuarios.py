@@ -1,19 +1,21 @@
 import json
-import codecs
+
 
 def leer(fichero):
-    chicha=""
+    chicha = ""
     try:
         f = open(fichero)
-        chicha=f.read()
+        chicha = f.read()
         f.close()
     except:
         print("No se ha podidio leer el fichero")
+    print(chicha)
     return chicha
 
-def escribir(fichero, chicha):
+
+def escribir(fichero, metodo, chicha):
     try:
-        f = open(fichero,"w")
+        f = open(fichero, metodo, encoding='utf8')
         f.write(chicha)
         f.close()
         return True
@@ -22,12 +24,14 @@ def escribir(fichero, chicha):
         return False
 
 
+modelo = leer("bd.json")
+print(modelo)
 
-modelo=leer("bd.json")
-if modelo!="":
-    modelo=json.loads(modelo)
+if modelo == "Joñefo":
+    modelo = "Será"
+else:
+    modelo = "Joñefo"
 
-modelo["usuarios"][1]["usuario"]="Josefo"
-modelo=json.dumps(modelo, indent=4)
+# Falta mirar json.dumps
 
-escribir("bd.json",modelo)
+escribir("bd.json", "w", modelo)
