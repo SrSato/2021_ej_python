@@ -2,8 +2,9 @@
         utilidades es un módulo pensado para comprobar las entradas
         del usuario en nuestros programas.
 
-        Dependencias: No tiene.
+        Dependencias: Datetime.
 '''
+import datetime
 
 
 def es_numero(cosa):
@@ -72,6 +73,38 @@ def pideFrase(peticion):
     return str(palabra)
 
 
+def es_fechable(anyo, mes, dia, hora, minutos):
+    try:
+        print(anyo, mes, dia, hora, minutos)
+        fecha = datetime.datetime(anyo, mes, dia, hora, minutos)
+        return True
+    except Exception:
+        print("La fecha no es correcta.")
+        return False
+
+
+def pide_fecha(frase):
+    print(frase)
+    bueno = False
+    while not bueno:
+        anyo = int(pideNumero("Año: "))
+        mes = int(pideNumero("Mes: "))
+        while mes < 1 or mes > 12:
+            mes = int(pideNumero("Por favor, entre 1(enero) y 12(diciembre): "))
+        dia = int(pideNumero("Día: "))
+        while dia < 1 or dia > 31:
+            dia = int(pideNumero("Por favor, entre 1 y 31: "))
+        hora = int(pideNumero("Hora:"))
+        while hora < 0 or hora > 23:
+            hora = int(pideNumero("Por favor, de 00 a 23"))
+        minutos = int(pideNumero("Minutos: "))
+        while minutos < 0 or minutos > 59:
+            minutos = int(pideNumero("Por favor, entre 00 y 59"))
+        bueno = es_fechable(anyo, mes, dia, hora, minutos)
+    fecha = datetime.datetime(anyo, mes, dia, hora, minutos)
+    return fecha
+
+
 def leer(fichero):
     '''Lee ficheros todos a piñon'''
     chicha = ""
@@ -82,6 +115,23 @@ def leer(fichero):
     except:
         print("No se ha podidio leer el fichero")
     return chicha
+
+
+def leer_archivo_lista_lineas(path, mode):
+    '''
+    Abre un archivo de una ubicación dada "path"
+    Recibe el modo en el que deseamos abrir "w, r, a"
+    Almacena cada línea de texto en una fila.
+    Devuelve la lista.
+    '''
+    try:
+        input_file = open(path, mode)
+        lines = [line.strip() for line in input_file]
+    except FileNotFoundError:
+        print('El fichero no existe en la ruta proporcionada.')
+    else:
+        input_file.close()
+        return lines
 
 
 def escribir(fichero, metodo, chicha):

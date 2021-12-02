@@ -1,0 +1,10 @@
+{"empleados":[{
+    "matricula": 10,
+    "nombre": "Pepe",
+    "apellido1": "",
+    "apellido2": "",
+    "telefono": 0,
+    "direccion": "",
+    "email": "",
+    "activo": false
+}]}
