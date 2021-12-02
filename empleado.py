@@ -5,7 +5,10 @@ import utilidades
 
 
 class Empleado:
-    """docstring for Empleado."""
+    """Clase que modela un trabajador genérico."""
+
+    HORA_MAX = 23  # Más allá de HORA_MAX:MIN_MAX no se puede trabajar.
+    MIN_MAX = 59   # Por defecto, las jornadas acaban a las 23:59
 
     def __init__(
                     self,
@@ -16,11 +19,11 @@ class Empleado:
                     telefono=0,
                     direccion="",
                     email="",
-                    activo=False
+                    activo=False,
+                    servicios=[]
                     ):
         '''Constructor de Empleado. Tiene valores por defecto'''
         self.datos = {}
-        self.servicios = []
         if Empleado.valida_campo(matricula, int):
             self.datos["matricula"] = matricula
         if Empleado.valida_campo(nombre, str):
@@ -37,6 +40,8 @@ class Empleado:
             self.datos["email"] = email
         if Empleado.valida_campo(activo, bool):
             self.datos["activo"] = activo
+        if Empleado.valida_campo(servicios, list):
+            self.datos["servicios"] = servicios
 
     @staticmethod
     def pide_nuevo():
@@ -90,6 +95,7 @@ class Empleado:
                 Activo:         {str(self.datos["activo"])}
                 '''
               )
+        self.muestra_servicios()
 
     def to_str(self):
         return f'''
@@ -103,6 +109,7 @@ class Empleado:
                 Dirección :     {str(self.datos["direccion"])}
                 email:          {str(self.datos["email"])}
                 Activo:         {str(self.datos["activo"])}
+                Servicios:      {str(self.datos["servicios"])}
                 '''
 
     def to_json(self):
@@ -111,7 +118,52 @@ class Empleado:
 
     def entrar(self, fecha):
         entrada = fecha
-        # salida = datetime.datetime(
-        #     entrada.year(), entrada.month(), entrada.day(), 23, 59)
-        salida = "jas jas"
-        self.servicios.append([entrada, salida])
+        salida = [entrada[0], entrada[1],
+                  entrada[2], self.HORA_MAX, self.MIN_MAX]
+        self.datos["servicios"].append([entrada, salida])
+
+    def salir(self, servicio, hora, minuto):
+        if hora < 0 or hora > 23 or minuto < 0 or minuto > 59:
+            return False
+        self.datos["servicios"][servicio][1][3] = hora
+        self.datos["servicios"][servicio][1][4] = minuto
+        return True
+
+    def muestra_servicios(self):
+        servicios = self.datos["servicios"]
+        print(
+            f"\t\tHoja de Servicios de trabajador nº: {self.datos['matricula']}")
+        for servicio in servicios:
+            entrada = datetime.datetime(
+                        servicio[0][0],
+                        servicio[0][1],
+                        servicio[0][2],
+                        servicio[0][3],
+                        servicio[0][4]
+                        )
+            salida = datetime.datetime(
+                        servicio[1][0],
+                        servicio[1][1],
+                        servicio[1][2],
+                        servicio[1][3],
+                        servicio[1][4]
+                        )
+            print(f"\t\t\tServicio num. {servicios.index(servicio)}")
+            print(
+                f"\t\t\t\tSemana {entrada.isocalendar()[1]} Entrada: {entrada} - Salida: {salida}")
+
+    def servicios_anyo(self, anyo):
+        res = []
+        servicios = self.datos["servicios"]
+        for servicio in servicios:
+            if servicio[0][0] == anyo:
+                res.append(servicio)
+        return res
+
+    def servicios_mes(self, anyo, mes):
+        res = []
+        servicios = self.servicios_anyo(anyo)
+        for servicio in servicios:
+            if servicio[0][1] == mes:
+                res.append(servicio)
+        return res

@@ -67,15 +67,13 @@ def pideFrase(peticion):
     '''
     palabra = input(peticion)
     while es_letra(palabra) is False:
-        msg = '''Ups... Por favor, revisa espacios y caracteres raros
-                 y vuelve a introducir la palabra: '''
+        msg = '''Ups... Por favor, revisa espacios y caracteres raros y vuelve a introducir la palabra: '''
         palabra = input(msg)
     return str(palabra)
 
 
 def es_fechable(anyo, mes, dia, hora, minutos):
     try:
-        print(anyo, mes, dia, hora, minutos)
         fecha = datetime.datetime(anyo, mes, dia, hora, minutos)
         return True
     except Exception:
@@ -101,8 +99,16 @@ def pide_fecha(frase):
         while minutos < 0 or minutos > 59:
             minutos = int(pideNumero("Por favor, entre 00 y 59"))
         bueno = es_fechable(anyo, mes, dia, hora, minutos)
-    fecha = datetime.datetime(anyo, mes, dia, hora, minutos)
-    return fecha
+    return [anyo, mes, dia, hora, minutos]
+
+
+def convert_timedelta(duration):
+    ''' Conversor para Timedelta'''
+    days, seconds = duration.days, duration.seconds
+    hours = days * 24 + seconds // 3600
+    minutes = (seconds % 3600) // 60
+    seconds = (seconds % 60)
+    return hours, minutes, seconds
 
 
 def leer(fichero):

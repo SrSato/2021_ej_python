@@ -46,9 +46,17 @@ opciones = [
         "metodo": directorio.buscar_nombre
     },
     {
-        "nombre": "Fichar entrada",
+        "nombre": "Fichar entrada [ADMIN]",
         "metodo": directorio.fichar_entrada
-    }
+    },
+    {
+        "nombre": "Fichar salida [ADMIN]",
+        "metodo": directorio.fichar_salida
+    },
+    {
+        "nombre": "Horas mensuales",
+        "metodo": directorio.horas_mes
+    },
 ]
 
 
