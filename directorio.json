@@ -1,28 +1,71 @@
 {"empleados":[{
-    "matricula": 10,
-    "nombre": "Pepe",
-    "apellido1": "",
-    "apellido2": "",
-    "telefono": 0,
-    "direccion": "",
-    "email": "",
-    "activo": false,
+    "matricula": 1,
+    "nombre": "Sera",
+    "apellido1": "Serez",
+    "apellido2": "Seroz",
+    "telefono": 4556564,
+    "direccion": "reaete",
+    "email": "eraeey",
+    "activo": true,
     "servicios": [
         [
             [
-                2010,
+                2021,
+                1,
+                1,
                 10,
-                10,
-                0,
-                10
+                0
             ],
             [
-                2010,
-                10,
-                10,
+                2021,
+                1,
+                1,
+                18,
+                0
+            ]
+        ]
+    ]
+},{
+    "matricula": 2,
+    "nombre": "Pepe",
+    "apellido1": "Pepez",
+    "apellido2": "Pepoz",
+    "telefono": 6556599,
+    "direccion": "aeyaeyaeyeyeer",
+    "email": "reayayereayy",
+    "activo": true,
+    "servicios": [
+        [
+            [
+                2021,
+                1,
+                1,
+                8,
+                0
+            ],
+            [
+                2021,
+                1,
+                1,
+                16,
+                0
+            ]
+        ],
+        [
+            [
+                2021,
+                1,
+                2,
+                8,
+                0
+            ],
+            [
+                2021,
+                1,
+                2,
                 23,
                 59
             ]
         ]
     ]
-},]}
+}]}

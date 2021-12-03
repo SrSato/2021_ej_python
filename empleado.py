@@ -167,3 +167,21 @@ class Empleado:
             if servicio[0][1] == mes:
                 res.append(servicio)
         return res
+
+    def servicios_mes_semanas(self, anyo, mes):
+        res = []
+
+        servicios = self.servicios_mes(anyo, mes)
+        semana_inicial = datetime.datetime(anyo, mes, 1, 0, 0).isocalendar()[1]
+        for semana in range(semana_inicial, semana_inicial+4):
+            semanal = []
+            for servicio in servicios:
+                anyo_ser = servicio[0][0]
+                mes_ser = servicio[0][1]
+                dia_ser = servicio[0][2]
+                num_semana_ser = datetime.datetime(
+                    anyo_ser, mes_ser, dia_ser, 0, 0).isocalendar()[1]
+                if num_semana_ser == semana:
+                    semanal.append(servicio)
+            res.append(semanal)
+        return semana_inicial, res

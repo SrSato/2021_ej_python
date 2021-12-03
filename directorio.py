@@ -77,6 +77,21 @@ class Directorio:
             "Dame el minutaje de salida: "))
         empleado.salir(num, hora, minuto)
 
+    def horas_ser(self, servicio):
+        entrada = datetime.datetime(
+                                    servicio[0][0],
+                                    servicio[0][1],
+                                    servicio[0][2],
+                                    servicio[0][3],
+                                    servicio[0][4])
+        salida = datetime.datetime(
+                                    servicio[1][0],
+                                    servicio[1][1],
+                                    servicio[1][2],
+                                    servicio[1][3],
+                                    servicio[1][4])
+        return salida-entrada
+
     def horas_mes(self):
         anyo = int(utilidades.pideNumero(
             "Dame el año a estudiar: "))
@@ -84,46 +99,54 @@ class Directorio:
             "Dame el mes a estudiar: "))
         listado = []
         for empleado in self.empleados:
-            servicios = empleado.servicios_mes(anyo, mes)
-            if servicios:
-                listado.append([empleado.datos["matricula"], servicios])
-        if not listado:
-            print("No hay registros para ese mes.")
-            return False
-        semana_inicial = datetime.datetime(
-            anyo, mes, 1, 0, 0).isocalendar()[1]
-        for i in range(semana_inicial, semana_inicial+4):
-            semanal = []
-            curris_semana = []
-            totales = datetime.datetime(
-                2020, 1, 1, 0, 0, 1) - datetime.datetime(2020, 1, 1, 0, 0, 0)
-            for registro in listado:
-                entrada = registro[1][0][0]
-                salida = registro[1][0][1]
-                semana = datetime.datetime(
-                    entrada[0], entrada[1], entrada[2]).isocalendar()[1]
-                if semana == i:
-                    semanal.append(registro)
-            print(f"Semana {i}:")
-            for caso in semanal:
-                trabajador = caso[0]
-                if trabajador not in curris_semana:
-                    curris_semana.append(trabajador)
-                entrada = caso[1][0][0]
-                entrada = datetime.datetime(
-                    entrada[0], entrada[1], entrada[2], entrada[3], entrada[4])
-                salida = caso[1][0][1]
-                salida = datetime.datetime(
-                    salida[0], salida[1], salida[2], salida[3], salida[4])
-                horas = salida-entrada
-                totales = totales + horas
-                horas, minutos, segundos = utilidades.convert_timedelta(horas)
-                print(
-                    f"Trabajador num {trabajador}: horas = {horas}:{minutos}")
-            totales_horas, totales_min, totales_seg = utilidades.convert_timedelta(
-                totales)
-            print(
-                f"Trabajadores: {len(curris_semana)} - Horas totales: {totales_horas} Minutos totales:{totales_min}")
+            horas_sem_emp = 0
+            inicial, servicios = empleado.servicios_mes_semanas(anyo, mes)
+            for servicio in servicios:
+                horas_sem_emp = horas_sem_emp + self.horas_ser(servicio)
+
+        # for empleado in self.empleados:
+        #     servicios = empleado.servicios_mes(anyo, mes)
+        #     if servicios:
+        #         listado.append([empleado.datos["matricula"], servicios])
+        # if not listado:
+        #     print("No hay registros para ese mes.")
+        #     return False
+        # print(listado)
+        # # Hasta aquí funciona 03/12/2021
+        # semana_inicial = datetime.datetime(
+        #     anyo, mes, 1, 0, 0).isocalendar()[1]
+        # for i in range(semana_inicial, semana_inicial+4):
+        #     semanal = []
+        #     curris_semana = []
+        #     totales = datetime.datetime(
+        #         2020, 1, 1, 0, 0, 1) - datetime.datetime(2020, 1, 1, 0, 0, 0)
+        #     for registro in listado:
+        #         entrada = registro[1][0][0]
+        #         salida = registro[1][0][1]
+        #         semana = datetime.datetime(
+        #             entrada[0], entrada[1], entrada[2]).isocalendar()[1]
+        #         if semana == i:
+        #             semanal.append(registro)
+        #     print(f"Semana {i}:")
+        #     for caso in semanal:
+        #         trabajador = caso[0]
+        #         if trabajador not in curris_semana:
+        #             curris_semana.append(trabajador)
+        #         entrada = caso[1][0][0]
+        #         entrada = datetime.datetime(
+        #             entrada[0], entrada[1], entrada[2], entrada[3], entrada[4])
+        #         salida = caso[1][0][1]
+        #         salida = datetime.datetime(
+        #             salida[0], salida[1], salida[2], salida[3], salida[4])
+        #         horas = salida-entrada
+        #         totales = totales + horas
+        #         horas, minutos, segundos = utilidades.convert_timedelta(horas)
+        #         print(
+        #             f"Trabajador num {trabajador}: horas = {horas}:{minutos}")
+        #     totales_horas, totales_min, totales_seg = utilidades.convert_timedelta(
+        #         totales)
+        #     print(
+        #         f"Trabajadores: {len(curris_semana)} - Horas totales: {totales_horas}h y {totales_min}min")
 
     def guardar(self):
         ''' Guarda el directorio en formato json en "directorio.json"
@@ -133,7 +156,7 @@ class Directorio:
             procesado = empleado.to_json()
             if self.empleados.index(empleado) != len(self.empleados)-1:
                 procesado = procesado + ","
-                stream = stream + procesado
+            stream = stream + procesado
         stream = stream + "]}"
         utilidades.escribir("directorio.json", "w", stream)
 
@@ -156,5 +179,4 @@ class Directorio:
                     empleado['email'],
                     empleado['activo'],
                     empleado['servicios'])
-                self.add_empleado(
-                    nuevo_empleado)
+                self.add_empleado(nuevo_empleado)

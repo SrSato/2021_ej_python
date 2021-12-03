@@ -23,6 +23,13 @@ def salir():
     directorio.guardar()
 
 
+def mambo():
+    empleado = directorio.buscar_id(2)
+    semana, servicios = empleado.servicios_mes_semanas(2021, 1)
+    print(semana)
+    print(servicios)
+
+
 continuar = True
 menu = "\nDirectorio Activo de Trukutú Biolabs:\n"
 directorio = Directorio()
@@ -57,6 +64,10 @@ opciones = [
         "nombre": "Horas mensuales",
         "metodo": directorio.horas_mes
     },
+    {
+        "nombre": "Dale mambo",
+        "metodo": mambo
+    }
 ]
 
 
